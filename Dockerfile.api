@@ -26,3 +26,30 @@ ENV OPENDAL_SCHEME=fs \
 
 EXPOSE 5001
 ENTRYPOINT ["/usr/local/bin/railway-api-entrypoint.sh"]
+
+# Everything below is a literal, so it is baked here rather than published as a
+# template variable: templateGenerate drops a literal defaultValue and the
+# variable then reaches the deploy form as required-with-no-value.
+ENV DB_TYPE=postgresql \
+    DB_HOST=postgres.railway.internal \
+    DB_PORT=5432 \
+    DB_USERNAME=postgres \
+    DB_DATABASE=dify \
+    DB_PLUGIN_DATABASE=dify_plugin \
+    REDIS_HOST=redis.railway.internal \
+    REDIS_PORT=6379 \
+    REDIS_DB=0 \
+    VECTOR_STORE=pgvector \
+    PGVECTOR_HOST=postgres.railway.internal \
+    PGVECTOR_PORT=5432 \
+    PGVECTOR_USER=postgres \
+    PGVECTOR_DATABASE=dify \
+    CODE_EXECUTION_ENDPOINT=http://sandbox.railway.internal:8194 \
+    PLUGIN_DAEMON_URL=http://plugin-daemon.railway.internal:5002 \
+    PLUGIN_REMOTE_INSTALL_HOST=plugin-daemon.railway.internal \
+    PLUGIN_REMOTE_INSTALL_PORT=5003 \
+    MARKETPLACE_ENABLED=true \
+    MARKETPLACE_API_URL=https://marketplace.dify.ai \
+    DEPLOY_ENV=PRODUCTION \
+    SERVER_WORKER_AMOUNT=1 \
+    CELERY_WORKER_AMOUNT=1

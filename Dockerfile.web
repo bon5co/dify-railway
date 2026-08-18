@@ -17,3 +17,8 @@ RUN chmod +x /usr/local/bin/railway-web-entrypoint.sh \
 
 EXPOSE 8080
 ENTRYPOINT ["/usr/local/bin/railway-web-entrypoint.sh"]
+
+ENV API_UPSTREAM=http://api.railway.internal:5001 \
+    PLUGIN_UPSTREAM=http://plugin-daemon.railway.internal:5002 \
+    NEXT_TELEMETRY_DISABLED=1 \
+    NGINX_CLIENT_MAX_BODY_SIZE=100M

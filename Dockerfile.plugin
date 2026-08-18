@@ -1,0 +1,25 @@
+# Dify plugin daemon with its literal configuration baked in.
+FROM langgenius/dify-plugin-daemon:0.6.3-local
+
+ENV SERVER_PORT=5002 \
+    DB_TYPE=postgresql \
+    DB_HOST=postgres.railway.internal \
+    DB_PORT=5432 \
+    DB_USERNAME=postgres \
+    DB_DATABASE=dify_plugin \
+    DB_SSL_MODE=disable \
+    REDIS_HOST=redis.railway.internal \
+    REDIS_PORT=6379 \
+    DIFY_INNER_API_URL=http://api.railway.internal:5001 \
+    PLUGIN_REMOTE_INSTALLING_HOST=0.0.0.0 \
+    PLUGIN_REMOTE_INSTALLING_PORT=5003 \
+    PLUGIN_STORAGE_TYPE=local \
+    PLUGIN_STORAGE_LOCAL_ROOT=/app/storage \
+    PLUGIN_WORKING_PATH=/app/storage/cwd \
+    PLUGIN_INSTALLED_PATH=plugin \
+    PLUGIN_PACKAGE_CACHE_PATH=plugin_packages \
+    PLUGIN_MEDIA_CACHE_PATH=assets \
+    FORCE_VERIFYING_SIGNATURE=true \
+    PYTHON_ENV_INIT_TIMEOUT=120 \
+    PLUGIN_MAX_EXECUTION_TIMEOUT=600 \
+    MAX_PLUGIN_PACKAGE_SIZE=52428800
