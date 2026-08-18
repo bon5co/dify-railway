@@ -1,0 +1,19 @@
+# Dify web console plus an in-container nginx gateway.
+#
+# Upstream's compose file publishes a separate nginx service so that the
+# console, the API and the plugin daemon share one origin. On Railway a second
+# billed service for a reverse proxy is waste, and giving the API its own public
+# domain forces CONSOLE_CORS_ALLOW_ORIGINS=*; running nginx beside the web
+# process keeps the whole deployment on a single public URL.
+FROM langgenius/dify-web:1.16.1
+
+USER root
+RUN apk add --no-cache nginx gettext su-exec curl
+
+COPY nginx.conf.template /etc/nginx/nginx.conf.template
+COPY railway-web-entrypoint.sh /usr/local/bin/railway-web-entrypoint.sh
+RUN chmod +x /usr/local/bin/railway-web-entrypoint.sh \
+ && mkdir -p /var/lib/nginx/tmp /run/nginx
+
+EXPOSE 8080
+ENTRYPOINT ["/usr/local/bin/railway-web-entrypoint.sh"]

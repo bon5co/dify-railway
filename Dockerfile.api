@@ -1,0 +1,28 @@
+# Dify API + Celery worker + beat in one Railway service.
+#
+# Railway volumes cannot be shared between services, and Dify's default
+# storage backend (OpenDAL fs) is a directory the API writes and the worker
+# reads. Running both roles in one container is what makes that possible
+# without paying for object storage.
+FROM langgenius/dify-api:1.16.1
+
+USER root
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends gosu \
+ && rm -rf /var/lib/apt/lists/*
+
+COPY railway-api-entrypoint.sh /usr/local/bin/railway-api-entrypoint.sh
+RUN chmod +x /usr/local/bin/railway-api-entrypoint.sh
+
+# Storage lives on the Railway volume mounted here.
+ENV OPENDAL_SCHEME=fs \
+    STORAGE_TYPE=opendal \
+    OPENDAL_FS_ROOT=/app/api/storage \
+    MODE=api \
+    MIGRATION_ENABLED=false \
+    DIFY_BIND_ADDRESS=0.0.0.0 \
+    DIFY_PORT=5001 \
+    LOG_LEVEL=INFO
+
+EXPOSE 5001
+ENTRYPOINT ["/usr/local/bin/railway-api-entrypoint.sh"]

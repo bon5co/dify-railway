@@ -1,0 +1,11 @@
+# Postgres with pgvector, provisioned for Dify.
+#
+# Dify needs three things from its database that a bare postgres image does not
+# give it: the pgvector extension (so the knowledge base does not need a
+# separate Weaviate/Qdrant service), a second database for the plugin daemon,
+# and server settings sized to the container rather than postgres' 128MB
+# defaults.
+FROM pgvector/pgvector:pg17
+
+COPY init-dify.sh /docker-entrypoint-initdb.d/10-init-dify.sh
+RUN chmod +x /docker-entrypoint-initdb.d/10-init-dify.sh
