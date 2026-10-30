@@ -1,5 +1,9 @@
 # dify-railway
 
+[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/dify-or-just-updated-llm-app-builder-who?referralCode=Z1xivh&utm_medium=integration&utm_source=template&utm_campaign=generic)
+
+**Deploy on Railway:** [Dify template](https://railway.com/deploy/dify-or-just-updated-llm-app-builder-who?referralCode=Z1xivh&utm_medium=integration&utm_source=template&utm_campaign=generic)
+
 Wrapper images that make [Dify](https://github.com/langgenius/dify) 1.16.1 deployable on
 Railway as a small, correctly-wired stack instead of the eleven-service compose translation
 the marketplace currently ships.
